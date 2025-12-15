@@ -17,6 +17,8 @@ import "@/style/main.scss";
 import "@/style/animate.scss";
 import "github-markdown-css/github-markdown.css";
 import { isElectron } from "./utils/env";
+// Vercel Speed Insights
+import { injectSpeedInsights } from "@vercel/speed-insights";
 
 // 挂载
 const app = createApp(App);
@@ -32,6 +34,11 @@ app.directive("throttle", throttleDirective);
 app.directive("visible", visibleDirective);
 // app
 app.mount("#app");
+
+// 初始化 Vercel Speed Insights（仅在客户端环境运行，不在 Electron 中运行）
+if (!isElectron) {
+  injectSpeedInsights();
+}
 
 // 初始化 ipc
 initIpc();
